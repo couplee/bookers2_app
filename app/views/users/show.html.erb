@@ -1,11 +1,10 @@
 <main>
-  <div><p id="notice"></p></div>
   <div class='container px-5 px-sm-0'>
     <div class='row'>
       <div class='col-md-3'>
         <h2>User info</h2>
         <table class='table'>
-          <tr><%= attachment_image_tag @user, :profile_image, :fill, 100, 100, format: 'jpeg', fallback: "nope.jpeg" %></tr>
+          <tr><%= attachment_image_tag @user, :profile_image, :fill, 100, 100, format: 'jpeg', fallback: "nope.jpeg", size: '100x100' %></tr>
           <tr>
             <th>name</th>
             <th><%= @user.name %></th>
@@ -20,25 +19,22 @@
         </div>
 
 
-  <h2 class="mt-3">New book</h2>
-  <form action="/books" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="&#x2713;" /><input type="hidden" name="authenticity_token" value="L7zp4wHbmDmEnSw5vqlIWoAat19aIswrgagXQ17Hz3J509VJyLQGu51bShpefvtuP1AuuucXoh97E57b5cyT9A==" />
-<%=form_with model:@book, url: books_path, local:true do |f| %>
+        <h2 class="mt-3">New book</h2>
+        <%=form_with model:@book, url: books_path, local:true do |f| %>
+          <div class="form-group">
+            <label for="book_title">Title</label>
+            <%= f.text_field :title, class: 'form-control book_title' %>
+          </div>
 
-  <div class="form-group">
-    <label for="book_title">Title</label>
-    <%= f.text_field :title, class: 'form-control book_title' %>
-  </div>
+          <div class="form-group">
+            <label for="book_body">Opinion</label>
+            <%= f.text_area :body, class: 'form-control book_body' %>
+          </div>
 
-  <div class="form-group">
-    <label for="book_body">Opinion</label>
-    <%= f.text_area :body, class: 'form-control book_body' %>
-  </div>
-
-  <div class="form-group">
-    <h4><%=f.submit 'Create Book', class: 'btn btn-success' %></h4>
-  </div>
-  </form>
-<% end %>
+          <div class="form-group">
+            <h4><%=f.submit 'Create Book', class: 'btn btn-success' %></h4>
+          </div>
+        <% end %>
       </div>
 
       <div class='col-md-8 offset-md-1'>
@@ -53,17 +49,17 @@
           </thead>
 
           <tbody>
-      <% @books.each do |book| %>
-            <tr>
-              <td>
-                <%= link_to user_path(book.user_id) do %>
-                <%= attachment_image_tag @user, :profile_image, :fill, 20, 20, format: 'no_image.jpg', fallback: "nope.jpeg", size: '20x20', class: 'attachment user profile_image fallback' %>
-                <% end %>
-              </td>
-              <td><%= link_to book.title, book_path(book.id), class: 'book_12282' %></td>
-              <td><%= book.body %></td>
-            </tr>
-      <% end %>
+            <% @books.each do |book| %>
+              <tr>
+                <td>
+                  <%= link_to user_path(book.user_id) do %>
+                  <%= attachment_image_tag @user, :profile_image, :fill, 20, 20, format: 'no_image.jpg', fallback: "nope.jpeg", size: '20x20', class: 'attachment user profile_image fallback' %>
+                  <% end %>
+                </td>
+                <td><%= link_to book.title, book_path(book.id), class: 'book_12282' %></td>
+                <td><%= book.body %></td>
+              </tr>
+            <% end %>
           </tbody>
         </table>
       </div>
